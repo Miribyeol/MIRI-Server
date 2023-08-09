@@ -1,6 +1,6 @@
 const express = require("express");
 
-module.exports = async ({ app }) => {
+module.exports = (app) => {
     // Health Check endpoints
     app.get("/status", (req, res) => {
         res.status(200).end();
@@ -29,7 +29,4 @@ module.exports = async ({ app }) => {
             },
         });
     });
-
-    // Return the express app
-    return app;
 };

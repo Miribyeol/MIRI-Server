@@ -1,12 +1,11 @@
+const express = require("express");
 const loaders = require("./loaders");
 const config = require("./config");
-const express = require("express");
 
-async function startServer() {
-    const app = express();
+const app = express();
 
-    await loaders.init({ expressApp: app });
-
+const startServer = async () => {
+    await loaders(app);
     app.listen(config.port, (err) => {
         if (err) {
             console.error(err);
@@ -14,7 +13,6 @@ async function startServer() {
         }
         console.log(`Server listening on port: ${config.port}`);
     });
-}
+};
 
-// Run the async function to start server
 startServer();
