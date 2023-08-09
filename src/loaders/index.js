@@ -1,16 +1,16 @@
+const sequelizeLoader = require("./sequelize");
 const expressLoader = require("./express");
-const { sequelize } = require("./sequelize");
 
-module.exports = {
-    init: async ({ expressApp }) => {
-        try {
-            await expressLoader({ app: expressApp });
-            console.log("Express Initialized");
+const loaders = async (app) => {
+    try {
+        await sequelizeLoader();
+        console.log("Database Initialized");
 
-            await sequelize.sync({ force: false });
-            console.log("Database Initialized");
-        } catch (err) {
-            console.log(err);
-        }
-    },
+        await expressLoader(app);
+        console.log("Express Initialized");
+    } catch (err) {
+        console.log(err);
+    }
 };
+
+module.exports = loaders;
