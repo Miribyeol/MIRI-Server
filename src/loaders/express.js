@@ -1,4 +1,6 @@
 const express = require("express");
+const config = require("../config");
+const routes = require("../routes");
 
 module.exports = (app) => {
     // Health Check endpoints
@@ -13,7 +15,10 @@ module.exports = (app) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
-    // Route not fount error handler
+    // Load API routes
+    app.use("", routes);
+
+    // Route not found error handler
     app.use((req, res, next) => {
         const err = new Error("Not Found");
         err.status = 404;
