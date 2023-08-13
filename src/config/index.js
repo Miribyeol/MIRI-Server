@@ -12,4 +12,7 @@ module.exports = {
         dialect: process.env.DATABASE_DIALECT,
         timezone: process.env.DATABASE_TIMEZONE,
     },
+    jwt: {
+        secret: process.env.JWT_SECRET,
+    },
 };
