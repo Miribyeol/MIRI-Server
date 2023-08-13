@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 const User = require("../models/user");
 
-exports.getUser = async (accessToken) => {
+exports.getUserByKakao = async (accessToken) => {
     try {
         const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
             headers: {
@@ -15,47 +15,44 @@ exports.getUser = async (accessToken) => {
         const exUser = await User.findOne({ where: { snsId: userProfile.id } });
 
         if (exUser) {
-            console.log("Already exist user");
-            return exUser.id;
+            return [exUser, false];
         } else {
+            const hasGender = () => {
+                if (userProfile.kakao_account.has_gender) {
+                    return userProfile.kakao_account.gender;
+                } else {
+                    return null;
+                }
+            };
+            const hasAgeRange = () => {
+                if (userProfile.kakao_account.has_age_range) {
+                    return userProfile.kakao_account.age_range;
+                } else {
+                    return null;
+                }
+            };
+
             const newUser = await User.create({
                 email: userProfile.kakao_account.email,
                 nickname: userProfile.kakao_account.profile.nickname,
-                gender: userProfile.kakao_account.gender,
-                ageRange: userProfile.kakao_account.age_range,
+                gender: hasGender(),
+                ageRange: hasAgeRange(),
                 snsId: userProfile.id,
             });
-            console.log("Create new user");
-            return newUser.id;
+            return [newUser, true];
         }
     } catch (err) {
         console.log(err);
-        return err;
     }
 };
 
-exports.generateAccessToken = async (userId) => {
+exports.generateToken = async (user) => {
     try {
-        const payload = {
-            userId,
-        };
-        const token = jwt.sign(payload, config.jwt.secret, {
-            algorithm: "HS256",
-            expiresIn: "1h",
-        });
-        return token;
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-exports.generateRefreshToken = async () => {
-    try {
-        const payload = {};
-        const token = jwt.sign(payload, config.jwt.secret, {
-            algorithm: "HS256",
-            expiresIn: "14d",
-        });
+        const token = jwt.sign(
+            { id: user.id, email: user.email },
+            config.jwt.secret,
+            { expiresIn: config.jwt.expiresIn }
+        );
         return token;
     } catch (err) {
         console.log(err);
