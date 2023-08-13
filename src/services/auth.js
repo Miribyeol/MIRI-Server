@@ -2,6 +2,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 const User = require("../models/user");
+const ChallengerStatus = require("../models/challengerStatus");
 
 exports.getUserByKakao = async (accessToken) => {
     try {
@@ -38,6 +39,10 @@ exports.getUserByKakao = async (accessToken) => {
                 gender: hasGender(),
                 ageRange: hasAgeRange(),
                 snsId: userProfile.id,
+            });
+            await ChallengerStatus.create({
+                userId: newUser.id,
+                challengeStep: 1,
             });
             return [newUser, true];
         }
