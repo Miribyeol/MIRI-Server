@@ -1,6 +1,6 @@
 const express = require("express");
 const config = require("../config");
-const routes = require("../routes");
+const routes = require("../api/routes");
 
 module.exports = (app) => {
     // Health Check endpoints
