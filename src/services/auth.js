@@ -53,11 +53,10 @@ exports.getUserByKakao = async (accessToken) => {
 
 exports.generateToken = async (user) => {
     try {
-        const token = jwt.sign(
-            { id: user.id, email: user.email },
-            config.jwt.secret,
-            { expiresIn: config.jwt.expiresIn }
-        );
+        const userId = user.id;
+        const token = jwt.sign({ userId }, config.jwt.secret, {
+            expiresIn: config.jwt.expiresIn,
+        });
         return token;
     } catch (err) {
         console.log(err);
