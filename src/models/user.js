@@ -17,9 +17,14 @@ class User extends Sequelize.Model {
                     type: Sequelize.STRING(10),
                     allowNull: true,
                 },
-                birthday: {
-                    type: Sequelize.DATEONLY,
+                ageRange: {
+                    type: Sequelize.STRING(10),
                     allowNull: true,
+                },
+                snsId: {
+                    type: Sequelize.STRING(30),
+                    allowNull: true,
+                    unique: true,
                 },
             },
             {
