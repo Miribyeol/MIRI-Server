@@ -2,9 +2,8 @@ const jwt = require("jsonwebtoken");
 const config = require("../../config");
 
 const checkJwt = async (req, res, next) => {
-    const token = req.headers.authorization.split("Bearer ")[1];
-
     try {
+        const token = req.headers.authorization.split("Bearer ")[1];
         const decoded = await jwt.verify(token, config.jwt.secret);
         req.userId = decoded.userId;
         next();
