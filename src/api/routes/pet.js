@@ -1,11 +1,21 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
-const { checkPetExist } = require("../../services/pet");
+const { getPetInfo, checkPetExist } = require("../../services/pet");
 
-router.get("/check", async (req, res) => {
+router.get("/", checkJwt, async (req, res) => {
     try {
-        const userId = req.body.userId;
+        const userId = req.userId;
+        const petInfo = await getPetInfo(userId);
+        return res.status(200).json({ petInfo });
+    } catch (err) {
+        return res.status(500).json({ error: err });
+    }
+});
+
+router.get("/check", checkJwt, async (req, res) => {
+    try {
+        const userId = req.userId;
         const exist = await checkPetExist(userId);
         if (exist) {
             return res.status(200).json({ exist: true });
