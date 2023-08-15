@@ -3,7 +3,7 @@ const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
 const { getUserNickname, changeUserNickname } = require("../../services/user");
 
-router.get("/", checkJwt, async (req, res) => {
+router.get("/nickname", checkJwt, async (req, res) => {
     try {
         const userId = req.userId;
         const nickname = await getUserNickname(userId);
