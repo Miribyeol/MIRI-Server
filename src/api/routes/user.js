@@ -14,7 +14,7 @@ router.get("/nickname", checkJwt, async (req, res) => {
     }
 });
 
-router.put("/nickname", checkJwt, async (req, res) => {
+router.patch("/nickname", checkJwt, async (req, res) => {
     try {
         const userId = req.userId;
         const nickname = req.body.nickname;
