@@ -41,7 +41,7 @@ class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasMany(db.Pet, { foreignKey: "userId", sourceKey: "id" });
+        db.User.hasOne(db.Pet, { foreignKey: "userId", sourceKey: "id" });
         db.User.hasOne(db.ChallengerStatus, {
             foreignKey: "userId",
             sourceKey: "id",
