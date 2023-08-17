@@ -4,7 +4,7 @@ class Pet extends Sequelize.Model {
     static initiate(sequelize) {
         Pet.init(
             {
-                type: {
+                species: {
                     type: Sequelize.STRING(20),
                     allowNull: false,
                 },
@@ -22,7 +22,7 @@ class Pet extends Sequelize.Model {
                 },
                 image: {
                     type: Sequelize.STRING(100),
-                    allowNull: false,
+                    allowNull: true,
                 },
                 userId: {
                     type: Sequelize.INTEGER,
