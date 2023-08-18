@@ -35,6 +35,14 @@ router.post("/", checkJwt, async (req, res) => {
     }
 });
 
+router.put("/", checkJwt, async (req, res) => {
+    try {
+        return res.status(200).json({ message: "put" });
+    } catch (err) {
+        return res.status(500).json({ error: err });
+    }
+});
+
 router.get("/check", checkJwt, async (req, res) => {
     try {
         const userId = req.userId;
