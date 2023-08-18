@@ -1,7 +1,12 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
-const { getPetInfo, createPet, checkPetExist } = require("../../services/pet");
+const {
+    getPetInfo,
+    createPet,
+    updatePet,
+    checkPetExist,
+} = require("../../services/pet");
 
 router.get("/", checkJwt, async (req, res) => {
     try {
@@ -24,6 +29,8 @@ router.post("/", checkJwt, async (req, res) => {
         };
         if (create) {
             return res.status(201).json(result);
+        } else {
+            return new throwError();
         }
     } catch (err) {
         console.log(err);
@@ -37,9 +44,25 @@ router.post("/", checkJwt, async (req, res) => {
 
 router.put("/", checkJwt, async (req, res) => {
     try {
-        return res.status(200).json({ message: "put" });
+        const userId = req.userId;
+        const petInfo = req.body;
+        const update = await updatePet(userId, petInfo);
+        const result = {
+            success: true,
+            message: "반려동물 정보 변경에 성공하였습니다.",
+        };
+        if (update) {
+            return res.status(201).json(result);
+        } else {
+            return new throwError();
+        }
     } catch (err) {
-        return res.status(500).json({ error: err });
+        console.log(err);
+        const result = {
+            success: false,
+            message: "반려동물 정보 변경에 실패하였습니다.",
+        };
+        return res.status(400).json(result);
     }
 });
 
