@@ -26,6 +26,24 @@ exports.createPet = async (userId, petInfo) => {
     }
 };
 
+exports.updatePet = async (userId, petInfo) => {
+    try {
+        const result = await Pet.update(
+            {
+                species: petInfo.species,
+                name: petInfo.name,
+                birthday: petInfo.birthday,
+                deathday: petInfo.deathday,
+            },
+            { where: { userId: userId } }
+        );
+        return result;
+    } catch (err) {
+        console.log(err);
+        return new throwError();
+    }
+};
+
 exports.checkPetExist = async (userId) => {
     try {
         const pet = await Pet.findOne({ where: { userId: userId } });
