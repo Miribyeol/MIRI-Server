@@ -25,5 +25,3 @@ exports.updateChallengerStep = async (userId, challengeStep) => {
         return new throwError();
     }
 };
-
-module.exports = exports;
