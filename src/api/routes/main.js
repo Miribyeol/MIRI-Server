@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
-const { getChallengerStep } = require("../../services/challengerStatus");
+const { getChallengerStep } = require("../../services/challenge");
 const { getEmotions } = require("../../services/emotion");
 const { getPosts } = require("../../services/post");
 

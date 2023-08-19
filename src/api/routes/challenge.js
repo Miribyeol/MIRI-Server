@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
-const { updateChallengerStep } = require("../../services/challengerStatus");
+const { updateChallengerStep } = require("../../services/challenge");
 
 router.patch("/status", checkJwt, async (req, res) => {
     try {
