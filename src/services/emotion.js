@@ -1,32 +1,32 @@
+const e = require("express");
 const Emotion = require("../models/emotion");
 
 exports.getEmotions = async () => {
-    try {
-        const emotions = await Emotion.findAll({
-            attributes: ["emotion", "count"],
-            order: [["count", "DESC"]],
-            limit: 10,
-        });
-        return emotions;
-    } catch (err) {
-        console.log(err);
+    const emotions = await Emotion.findAll({
+        attributes: ["emotion", "count"],
+        order: [["count", "DESC"]],
+        limit: 10,
+    });
+    if (!emotions) {
+        return null;
     }
+    return emotions;
 };
 
-exports.updateEmotion = (emotion) => {
+exports.updateEmotion = async (emotions) => {
+    const updatedEmotions = [];
     try {
-        emotion.forEach(async (element) => {
-            const emotionData = await Emotion.findOne({
+        for (const element of emotions) {
+            const emotion = await Emotion.findOne({
                 where: { emotion: element },
             });
-            console.log(element);
-            emotionData.count += 1;
-            await emotionData.save();
-        });
-
-        return true;
+            emotion.count += 1;
+            await emotion.save();
+            updatedEmotions.push(emotion.emotion);
+        }
+        return updatedEmotions;
     } catch (err) {
         console.log(err);
-        return new throwError();
+        return null;
     }
 };
