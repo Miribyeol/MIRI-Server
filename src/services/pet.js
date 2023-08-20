@@ -1,58 +1,55 @@
 const Pet = require("../models/pet");
 
 exports.getPetInfo = async (userId) => {
-    try {
-        const petInfo = await Pet.findOne({ where: { userId: userId } });
-        return petInfo;
-    } catch (err) {
-        console.log(err);
-        return new throwError();
+    const petInfo = await Pet.findOne({
+        attributes: ["name", "species", "birthday", "deathday"],
+        where: { userId: userId },
+    });
+    if (!petInfo) {
+        return null;
     }
+    return petInfo;
 };
 
 exports.createPet = async (userId, petInfo) => {
-    try {
-        const result = await Pet.create({
-            species: petInfo.species,
-            name: petInfo.name,
-            birthday: petInfo.birthday,
-            deathday: petInfo.deathday,
-            userId: userId,
-        });
-        return result;
-    } catch (err) {
-        console.log(err);
-        return new throwError();
+    const createdPet = await Pet.create({
+        species: petInfo.species,
+        name: petInfo.name,
+        birthday: petInfo.birthday,
+        deathday: petInfo.deathday,
+        userId: userId,
+    });
+    if (!createdPet) {
+        return null;
     }
+
+    const createdPetInfo = {
+        species: createdPet.species,
+        name: createdPet.name,
+        birthday: createdPet.birthday,
+        deathday: createdPet.deathday,
+    };
+    return createdPetInfo;
 };
 
 exports.updatePet = async (userId, petInfo) => {
-    try {
-        const result = await Pet.update(
-            {
-                species: petInfo.species,
-                name: petInfo.name,
-                birthday: petInfo.birthday,
-                deathday: petInfo.deathday,
-            },
-            { where: { userId: userId } }
-        );
-        return result;
-    } catch (err) {
-        console.log(err);
-        return new throwError();
+    const updatedPet = await Pet.findOne({
+        where: { userId: userId },
+    });
+    if (!updatedPet) {
+        return null;
     }
-};
+    updatedPet.species = petInfo.species;
+    updatedPet.name = petInfo.name;
+    updatedPet.birthday = petInfo.birthday;
+    updatedPet.deathday = petInfo.deathday;
+    await updatedPet.save();
 
-exports.checkPetExist = async (userId) => {
-    try {
-        const pet = await Pet.findOne({ where: { userId: userId } });
-        if (pet) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (err) {
-        console.log(err);
-    }
+    const updatedPetInfo = {
+        species: updatedPet.species,
+        name: updatedPet.name,
+        birthday: updatedPet.birthday,
+        deathday: updatedPet.deathday,
+    };
+    return updatedPetInfo;
 };
