@@ -2,24 +2,29 @@ const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
 const { updateEmotion } = require("../../services/emotion");
+const {
+    PATCH_EMOTION_SUCCESS,
+    PATCH_EMOTION_FAIL,
+} = require("../../util/response/message");
+const response = require("../../util/response");
 
-router.post("/", checkJwt, async (req, res) => {
+router.patch("/", checkJwt, async (req, res, next) => {
     try {
-        const emotion = req.body.emotion;
-        const update = await updateEmotion(emotion);
-
-        const result = {
-            success: true,
-            message: "요청에 성공하였습니다.",
-        };
-        return res.status(201).json(result);
+        const emotions = req.body.emotions;
+        const updatedEmotions = await updateEmotion(emotions);
+        if (!updatedEmotions) {
+            return res
+                .status(400)
+                .json(response.response400(PATCH_EMOTION_FAIL));
+        }
+        return res.status(201).json(
+            response.response201(PATCH_EMOTION_SUCCESS, {
+                emotions: updatedEmotions,
+            })
+        );
     } catch (err) {
         console.log(err);
-        const result = {
-            success: false,
-            message: "요청에 실패하였습니다.",
-        };
-        return res.status(400).json(result);
+        return next(err);
     }
 });
 
