@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
+const { TOKEN_EXPIRED, LOGIN_FAIL } = require("../../util/response/message");
+const response = require("../../util/response");
 
 const checkJwt = async (req, res, next) => {
     try {
@@ -9,9 +11,9 @@ const checkJwt = async (req, res, next) => {
         next();
     } catch (err) {
         if (err.name === "TokenExpiredError") {
-            return res.status(419).json({ message: "Token expired" });
+            return res.status(403).json(response.response403(TOKEN_EXPIRED));
         } else {
-            return res.status(401).json({ message: "Unauthorized" });
+            return res.status(401).json(response.response401(LOGIN_FAIL));
         }
     }
 };
