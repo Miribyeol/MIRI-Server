@@ -1,36 +1,36 @@
 const express = require("express");
-const config = require("../config");
+const morgan = require("morgan");
 const routes = require("../api/routes");
 
 module.exports = (app) => {
-    // Health Check endpoints
+    /* Health Check */
     app.get("/status", (req, res) => {
-        res.status(200).end();
-    });
-    app.head("/status", (req, res) => {
-        res.status(200).end();
+        res.status(200).send("Hello MIRI!");
     });
 
-    app.use(require("morgan")("dev"));
+    /* Morgan Request Logger */
+    app.use(morgan("dev"));
+
+    /* Request Data */
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
 
-    // Load API routes
+    /* Routes */
     app.use("", routes);
 
-    // Route not found error handler
+    /* Catch 404 and Forward to error handler */
     app.use((req, res, next) => {
         const err = new Error("Not Found");
         err.status = 404;
         next(err);
     });
 
-    // Error handler
-    app.use((err, req, res, next) => {
-        res.status(err.status || 500);
-        res.json({
+    /* Error handler */
+    app.use((err, req, res) => {
+        res.status(err.status || 500).json({
             errors: {
                 message: err.message,
+                error: err,
             },
         });
     });
