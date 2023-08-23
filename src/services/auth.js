@@ -34,8 +34,8 @@ exports.authOrCreateUser = async (userProfile) => {
         const newUser = await User.create({
             email: userProfile.kakao_account.email,
             nickname: userProfile.kakao_account.profile.nickname,
-            gender: hasGender(),
-            ageRange: hasAgeRange(),
+            gender: hasGender,
+            ageRange: hasAgeRange,
             snsId: userProfile.id,
         });
 
