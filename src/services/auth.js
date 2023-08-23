@@ -22,7 +22,7 @@ exports.getUserByKakao = async (accessToken) => {
 exports.authOrCreateUser = async (userProfile) => {
     const exUser = await User.findOne({ where: { snsId: userProfile.id } });
     if (exUser) {
-        return { userId: exUser, isNewUser: false };
+        return { userId: exUser.id, isNewUser: false };
     } else {
         const hasGender = userProfile.kakao_account.has_gender
             ? userProfile.kakao_account.gender
