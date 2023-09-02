@@ -41,7 +41,7 @@ exports.authOrCreateUser = async (userProfile) => {
 
         await ChallengerStatus.create({
             userId: newUser.id,
-            challengeStep: 1,
+            challengeStep: 0,
         });
 
         return { userId: newUser.id, isNewUser: true };

@@ -12,6 +12,11 @@ router.patch("/status", checkJwt, async (req, res, next) => {
     try {
         const userId = req.userId;
         const challengeStep = req.body.challengeStep;
+        if (challengeStep > 14) {
+            return res
+                .status(400)
+                .json(response.response400(PATCH_CHALLENGE_STATUS_FAIL));
+        }
         const updatedStep = await updateChallengerStep(userId, challengeStep);
         if (!updatedStep) {
             return res
