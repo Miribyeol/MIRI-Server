@@ -17,7 +17,6 @@ const {
     PUT_PET_INFO_FAIL,
 } = require("../../util/response/message");
 const response = require("../../util/response");
-const config = require("../../config");
 
 router.get("/", checkJwt, async (req, res, next) => {
     try {
@@ -97,18 +96,6 @@ router.post("/image", checkJwt, uploadImage, (req, res, next) => {
                 filename,
             })
         );
-    } catch (err) {
-        console.log(err);
-        return next(err);
-    }
-});
-
-router.get("/image/:filename", (req, res, next) => {
-    try {
-        const filename = req.params.filename;
-        return res
-            .status(200)
-            .sendFile(filename, { root: config.imageStorage });
     } catch (err) {
         console.log(err);
         return next(err);
