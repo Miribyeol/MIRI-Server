@@ -3,6 +3,7 @@ dotenv.config();
 
 module.exports = {
     port: parseInt(process.env.PORT),
+    imageStorage: process.env.IMAGE_STORAGE,
     kakaoURL: process.env.KAKAO_URL,
     database: {
         username: process.env.DATABASE_USERNAME,
