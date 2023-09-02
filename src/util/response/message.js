@@ -23,6 +23,9 @@ module.exports = Object.freeze({
 
     POST_PET_INFO_SUCCESS: "사용자의 반려동물 정보를 등록했습니다.",
     POST_PET_INFO_FAIL: "사용자의 반려동물 정보를 등록하지 못했습니다.",
+    POST_PET_IMAGE_SUCCESS: "사용자의 반려동물 이미지를 등록했습니다.",
+    POST_PET_IMAGE_FAIL: "사용자의 반려동물 이미지를 등록하지 못했습니다.",
+
     EXIST_PET: "반려동물 정보가 이미 존재하는 사용자입니다.",
 
     PUT_PET_INFO_SUCCESS: "사용자의 반려동물 정보를 변경했습니다.",
