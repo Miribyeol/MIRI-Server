@@ -1,5 +1,6 @@
 const sequelizeLoader = require("./sequelize");
 const expressLoader = require("./express");
+const checkImageStorage = require("./storage");
 
 const loaders = async (app) => {
     try {
@@ -8,6 +9,8 @@ const loaders = async (app) => {
 
         await expressLoader(app);
         console.log("Express Initialized");
+
+        await checkImageStorage();
     } catch (err) {
         console.log(err);
     }
