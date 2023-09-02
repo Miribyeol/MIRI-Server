@@ -1,6 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
 const routes = require("../api/routes");
+const config = require("../config");
+const path = require("path");
+const root = process.cwd();
 
 module.exports = (app) => {
     /* Health Check */
@@ -10,6 +13,9 @@ module.exports = (app) => {
 
     /* Morgan Request Logger */
     app.use(morgan("dev"));
+
+    /* Static Files */
+    app.use("/pet/image", express.static(path.join(root, config.imageStorage)));
 
     /* Request Data */
     app.use(express.json());
