@@ -2,7 +2,7 @@ const Pet = require("../models/pet");
 
 exports.getPetInfo = async (userId) => {
     const petInfo = await Pet.findOne({
-        attributes: ["name", "species", "birthday", "deathday"],
+        attributes: ["name", "species", "birthday", "deathday", "image"],
         where: { userId: userId },
     });
     if (!petInfo) {
@@ -17,6 +17,7 @@ exports.createPet = async (userId, petInfo) => {
         name: petInfo.name,
         birthday: petInfo.birthday,
         deathday: petInfo.deathday,
+        image: petInfo.image,
         userId: userId,
     });
     if (!createdPet) {
@@ -28,6 +29,7 @@ exports.createPet = async (userId, petInfo) => {
         name: createdPet.name,
         birthday: createdPet.birthday,
         deathday: createdPet.deathday,
+        image: createdPet.image,
     };
     return createdPetInfo;
 };
@@ -43,6 +45,7 @@ exports.updatePet = async (userId, petInfo) => {
     updatedPet.name = petInfo.name;
     updatedPet.birthday = petInfo.birthday;
     updatedPet.deathday = petInfo.deathday;
+    updatedPet.image = petInfo.image;
     await updatedPet.save();
 
     const updatedPetInfo = {
@@ -50,6 +53,7 @@ exports.updatePet = async (userId, petInfo) => {
         name: updatedPet.name,
         birthday: updatedPet.birthday,
         deathday: updatedPet.deathday,
+        image: updatedPet.image,
     };
     return updatedPetInfo;
 };

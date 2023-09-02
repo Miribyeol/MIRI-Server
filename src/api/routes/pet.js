@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
+const { uploadImage } = require("../middlewares/multer");
 const { getPetInfo, createPet, updatePet } = require("../../services/pet");
 const {
     CHECK_PET_EXIST_SUCCESS,
@@ -9,11 +10,14 @@ const {
     GET_PET_INFO_FAIL,
     POST_PET_INFO_SUCCESS,
     POST_PET_INFO_FAIL,
+    POST_PET_IMAGE_SUCCESS,
+    POST_PET_IMAGE_FAIL,
     EXIST_PET,
     PUT_PET_INFO_SUCCESS,
     PUT_PET_INFO_FAIL,
 } = require("../../util/response/message");
 const response = require("../../util/response");
+const config = require("../../config");
 
 router.get("/", checkJwt, async (req, res, next) => {
     try {
@@ -74,6 +78,37 @@ router.put("/", checkJwt, async (req, res, next) => {
                 petInfo: updatedPet,
             })
         );
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+router.post("/image", checkJwt, uploadImage, (req, res, next) => {
+    try {
+        const filename = req.file.filename;
+        if (!filename) {
+            return res
+                .status(400)
+                .json(response.response400(POST_PET_IMAGE_FAIL));
+        }
+        return res.status(201).json(
+            response.response201(POST_PET_IMAGE_SUCCESS, {
+                filename,
+            })
+        );
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+});
+
+router.get("/image/:filename", (req, res, next) => {
+    try {
+        const filename = req.params.filename;
+        return res
+            .status(200)
+            .sendFile(filename, { root: config.imageStorage });
     } catch (err) {
         console.log(err);
         return next(err);
