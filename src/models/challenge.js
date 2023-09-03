@@ -4,6 +4,10 @@ class Challenge extends Sequelize.Model {
     static initiate(sequelize) {
         Challenge.init(
             {
+                id: {
+                    type: Sequelize.INTEGER,
+                    primaryKey: true,
+                },
                 title: {
                     type: Sequelize.STRING(100),
                     allowNull: false,
@@ -23,7 +27,6 @@ class Challenge extends Sequelize.Model {
                 underscored: true,
                 modelName: "Challenge",
                 tableName: "challenges",
-                paranoid: false,
                 charset: "utf8mb4",
                 collate: "utf8mb4_general_ci",
             }
