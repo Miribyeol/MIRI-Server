@@ -83,9 +83,9 @@ router.put("/", checkJwt, async (req, res, next) => {
     }
 });
 
-router.post("/image", checkJwt, uploadImage, (req, res, next) => {
+router.post("/image", uploadImage, (req, res, next) => {
     try {
-        const filename = req.file.filename;
+        const filename = req.file == undefined ? null : req.file.filename;
         if (!filename) {
             return res
                 .status(400)
