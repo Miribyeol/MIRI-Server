@@ -19,7 +19,6 @@ class ChallengerStatus extends Sequelize.Model {
                 underscored: true,
                 modelName: "ChallengerStatus",
                 tableName: "challengers_status",
-                paranoid: false,
                 charset: "utf8mb4",
                 collate: "utf8mb4_general_ci",
             }
