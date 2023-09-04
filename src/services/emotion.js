@@ -1,4 +1,3 @@
-const e = require("express");
 const Emotion = require("../models/emotion");
 
 exports.getEmotions = async () => {
