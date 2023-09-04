@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { checkJwt } = require("../middlewares/checkJwt");
-const { updateChallengerStep } = require("../../services/challenge");
+const { updateChallengerStatus } = require("../../services/challenge");
 const {
     PATCH_CHALLENGE_STATUS_SUCCESS,
     PATCH_CHALLENGE_STATUS_FAIL,
@@ -17,7 +17,7 @@ router.patch("/status", checkJwt, async (req, res, next) => {
                 .status(400)
                 .json(response.response400(PATCH_CHALLENGE_STATUS_FAIL));
         }
-        const updatedStep = await updateChallengerStep(userId, challengeStep);
+        const updatedStep = await updateChallengerStatus(userId, challengeStep);
         if (!updatedStep) {
             return res
                 .status(400)
