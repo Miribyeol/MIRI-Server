@@ -24,8 +24,8 @@ exports.updateChallengerStatus = async (userId, challengeStep) => {
     return updatedChallengeStep;
 };
 
-exports.checkChallengeStep = (challengeStep) => {
+exports.checkChallengeStep = (challengerStep) => {
     const checkChallengerStep =
-        challengeStep == null || challengeStep == undefined ? false : true;
+        challengerStep == null || challengerStep == undefined ? false : true;
     return checkChallengerStep;
 };

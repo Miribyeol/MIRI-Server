@@ -16,16 +16,16 @@ const response = require("../../util/response");
 router.get("/", checkJwt, async (req, res, next) => {
     try {
         const userId = req.userId;
-        const challengeStep = await getChallengerStatus(userId);
-        const isChallengeStepValid = checkChallengeStep(challengeStep);
+        const challengerStep = await getChallengerStatus(userId);
+        const isChallengerStepValid = checkChallengeStep(challengerStep);
         const emotions = await getEmotions();
         const posts = await getPosts();
-        if (!isChallengeStepValid || !emotions || !posts) {
+        if (!isChallengerStepValid || !emotions || !posts) {
             return res.status(400).json(response.response400(GET_MAIN_FAIL));
         }
         return res.status(200).json(
             response.response200(GET_MAIN_SUCCESS, {
-                challengeStep,
+                challengerStep,
                 emotions,
                 posts,
             })
