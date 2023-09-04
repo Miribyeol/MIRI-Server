@@ -1,6 +1,6 @@
 const ChallengerStatus = require("../models/challengerStatus");
 
-exports.getChallengerStep = async (userId) => {
+exports.getChallengerStatus = async (userId) => {
     const challengerStatus = await ChallengerStatus.findOne({
         where: { userId: userId },
     });
@@ -10,7 +10,7 @@ exports.getChallengerStep = async (userId) => {
     return challengerStatus.challengeStep;
 };
 
-exports.updateChallengerStep = async (userId, challengeStep) => {
+exports.updateChallengerStatus = async (userId, challengeStep) => {
     const challengerStatus = await ChallengerStatus.findOne({
         where: { userId: userId },
     });
@@ -22,4 +22,10 @@ exports.updateChallengerStep = async (userId, challengeStep) => {
 
     const updatedChallengeStep = challengerStatus.challengeStep;
     return updatedChallengeStep;
+};
+
+exports.checkChallengeStep = (challengeStep) => {
+    const checkChallengerStep =
+        challengeStep == null || challengeStep == undefined ? false : true;
+    return checkChallengerStep;
 };
