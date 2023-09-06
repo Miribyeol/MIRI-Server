@@ -29,6 +29,8 @@ class ChallengerStatus extends Sequelize.Model {
         db.ChallengerStatus.belongsTo(db.User, {
             foreignKey: "userId",
             targetKey: "id",
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
         });
         db.ChallengerStatus.belongsTo(db.Challenge, {
             foreignKey: "challengeStep",
