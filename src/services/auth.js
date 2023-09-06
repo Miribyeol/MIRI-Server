@@ -53,12 +53,7 @@ exports.generateToken = async (userId) => {
     const token = jwt.sign({ userId }, config.jwt.secret, {
         expiresIn: config.jwt.expiresIn,
     });
-    const existToken = await redisClient.exists(userId.toString());
-    if (existToken) {
-        await redisClient.rename(userId.toString(), token);
-    } else {
-        await redisClient.set(userId.toString(), token);
-    }
+    await redisClient.set(userId.toString(), token);
 
     return token;
 };
