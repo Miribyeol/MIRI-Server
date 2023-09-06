@@ -23,7 +23,7 @@ class User extends Sequelize.Model {
                 },
                 snsId: {
                     type: Sequelize.STRING(30),
-                    allowNull: true,
+                    allowNull: false,
                     unique: true,
                 },
             },
@@ -41,10 +41,17 @@ class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasOne(db.Pet, { foreignKey: "userId", sourceKey: "id" });
+        db.User.hasOne(db.Pet, {
+            foreignKey: "userId",
+            sourceKey: "id",
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
+        });
         db.User.hasOne(db.ChallengerStatus, {
             foreignKey: "userId",
             sourceKey: "id",
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
         });
     }
 }

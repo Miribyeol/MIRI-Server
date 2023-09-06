@@ -1,5 +1,8 @@
 const db = require("../models");
+const { challengeData, emotionData } = require("./seeder");
 
-module.exports = () => {
-    db.sequelize.sync({ force: false });
+module.exports = async () => {
+    await db.sequelize.sync({ force: false });
+    challengeData();
+    emotionData();
 };

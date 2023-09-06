@@ -22,7 +22,7 @@ class Pet extends Sequelize.Model {
                 },
                 image: {
                     type: Sequelize.STRING(100),
-                    allowNull: true,
+                    allowNull: false,
                 },
                 userId: {
                     type: Sequelize.INTEGER,
@@ -43,7 +43,12 @@ class Pet extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Pet.belongsTo(db.User, { foreignKey: "userId", targetKey: "id" });
+        db.Pet.belongsTo(db.User, {
+            foreignKey: "userId",
+            targetKey: "id",
+            onDelete: "CASCADE",
+            onUpdate: "CASCADE",
+        });
     }
 }
 
