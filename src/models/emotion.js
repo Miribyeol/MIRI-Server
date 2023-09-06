@@ -7,6 +7,7 @@ class Emotion extends Sequelize.Model {
                 emotion: {
                     type: Sequelize.STRING(100),
                     allowNull: false,
+                    unique: true,
                 },
                 count: {
                     type: Sequelize.INTEGER,
