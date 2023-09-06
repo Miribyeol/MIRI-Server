@@ -7,10 +7,13 @@ const loaders = async (app) => {
         await sequelizeLoader();
         console.log("Database Initialized");
 
-        await expressLoader(app);
+        require("./redis");
+        console.log("Redis Initialized");
+
+        expressLoader(app);
         console.log("Express Initialized");
 
-        await checkImageStorage();
+        checkImageStorage();
     } catch (err) {
         console.log(err);
     }
