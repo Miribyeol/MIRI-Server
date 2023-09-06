@@ -18,7 +18,7 @@ class Challenge extends Sequelize.Model {
                 },
                 image: {
                     type: Sequelize.STRING(100),
-                    allowNull: false,
+                    allowNull: true,
                 },
             },
             {
