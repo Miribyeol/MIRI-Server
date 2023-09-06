@@ -1,8 +1,9 @@
-const axios = require("axios");
-const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const ChallengerStatus = require("../models/challengerStatus");
+const axios = require("axios");
+const jwt = require("jsonwebtoken");
 const config = require("../config");
+const redisClient = require("../loaders/redis");
 
 exports.getUserByKakao = async (accessToken) => {
     try {
@@ -52,5 +53,12 @@ exports.generateToken = async (userId) => {
     const token = jwt.sign({ userId }, config.jwt.secret, {
         expiresIn: config.jwt.expiresIn,
     });
+    const existToken = await redisClient.exists(userId.toString());
+    if (existToken) {
+        await redisClient.rename(userId.toString(), token);
+    } else {
+        await redisClient.set(userId.toString(), token);
+    }
+
     return token;
 };
