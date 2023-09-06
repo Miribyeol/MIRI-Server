@@ -17,7 +17,7 @@ router.get("/", checkJwt, async (req, res, next) => {
     try {
         const userId = req.userId;
         const challengerStep = await getChallengerStatus(userId);
-        const isChallengerStepValid = checkChallengeStep(challengerStep);
+        const isChallengerStepValid = await checkChallengeStep(challengerStep);
         const emotions = await getEmotions();
         const posts = await getPosts();
         if (!isChallengerStepValid || !emotions || !posts) {
