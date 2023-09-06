@@ -9,7 +9,6 @@ const checkJwt = async (req, res, next) => {
         const token = req.headers.authorization.split("Bearer ")[1];
         const decoded = await jwt.verify(token, config.jwt.secret);
         const redisToken = await redisClient.get(decoded.userId.toString());
-        console.log(redisToken);
         if (redisToken !== token) {
             return res.status(401).json(response.response401(LOGIN_FAIL));
         }
