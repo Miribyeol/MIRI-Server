@@ -1,5 +1,6 @@
 const Challenge = require("../models/challenge");
 const Emotion = require("../models/emotion");
+const Post = require("../models/post");
 
 const challengeData = async () => {
     await Challenge.bulkCreate(
@@ -134,4 +135,31 @@ const emotionData = async () => {
     );
 };
 
-module.exports = { challengeData, emotionData };
+const postData = async () => {
+    await Post.bulkCreate(
+        [
+            {
+                id: 1,
+                title: "우리 함께한 소중한 순간들",
+                content: "소중한 순간들은 영원히 기억됩니다.",
+                author: "김규동",
+            },
+            {
+                id: 2,
+                title: "이별의 아픔을 나누는 글",
+                content:
+                    "이별의 아픔을 나누며 힘을 내는 건 언제나 도움이 돼요.",
+                author: "김규동",
+            },
+            {
+                id: 3,
+                title: "사랑하는 친구에게 전하는 말",
+                content: "당신은 특별하고 영원한 존재로 우리 마음 속에 있어요.",
+                author: "김규동",
+            },
+        ],
+        { updateOnDuplicate: ["id"] }
+    );
+};
+
+module.exports = { challengeData, emotionData, postData };
