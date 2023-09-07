@@ -1,5 +1,7 @@
 # MIRI-SERVER
 
+![MIRI_Logo](https://github.com/Miribyeol/MIRI-Server/assets/70312191/b87ff64e-7719-4648-810c-e62f0145a38c)
+
 펫로스 증후군 극복 서비스 [미리별](https://github.com/Miribyeol)의 **Back-End Repository** 입니다.
 
 ---
