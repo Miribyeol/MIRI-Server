@@ -12,7 +12,9 @@ module.exports = (app) => {
     });
 
     /* Morgan Request Logger */
-    app.use(morgan("dev"));
+    app.use(
+        morgan(process.env.NODE_ENV === "development" ? "dev" : "combined")
+    );
 
     /* Static Files */
     app.use("/pet/image", express.static(path.join(root, config.imageStorage)));
@@ -36,7 +38,6 @@ module.exports = (app) => {
         res.status(err.status || 500).json({
             errors: {
                 message: err.message,
-                error: err,
             },
         });
     });
