@@ -15,7 +15,8 @@ module.exports = {
     },
     redis: {
         host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT,
+        port: parseInt(process.env.REDIS_PORT),
+        expireTime: parseInt(process.env.REDIS_EXPIRE_TIME),
     },
     jwt: {
         secret: process.env.JWT_SECRET,
