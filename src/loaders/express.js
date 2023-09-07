@@ -12,9 +12,7 @@ module.exports = (app) => {
     });
 
     /* Morgan Request Logger */
-    app.use(
-        morgan(process.env.NODE_ENV === "development" ? "dev" : "combined")
-    );
+    app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
     /* Static Files */
     app.use("/pet/image", express.static(path.join(root, config.imageStorage)));
